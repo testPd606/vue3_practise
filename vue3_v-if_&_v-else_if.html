@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3練習</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <div id="pageMain" class="container mt-5">
+        <h1 class="text-primary-emphasis text-center mb-5">{{bigTitle}}</h1>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-primary w-100" v-on:click="name = '麥當勞'" :class="{'active' : name === '麥當勞'}">{{products[0].btnName}}</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary w-100" v-on:click="name = '漢堡王'" :class="{'active' : name === '漢堡王'}">{{products[1].btnName}}</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary w-100" v-on:click="name = '摩斯漢堡'" :class="{'active' : name === '摩斯漢堡'}">{{products[2].btnName}}</button>
+            </div>
+        </div>
+        <br>
+        <div class="card mb-3" v-if="name === '麥當勞' ">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img :src="products[0].imgUrl" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{products[0].cardTitle}}</h5>
+                        <p class="card-text">{{products[0].cardText}}</p>
+                        <p class="card-text">單點：個 / NT$<small class="text-body-secondary">{{products[0].price}}</small>元</p>
+                        <a href="#" class="btn btn-danger">{{products[0].aLink}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3" v-else-if="name === '漢堡王' ">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img :src="products[1].imgUrl" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{products[1].cardTitle}}</h5>
+                        <p class="card-text">{{products[1].cardText}}</p>
+                        <p class="card-text">單點：個 / NT$<small class="text-body-secondary">{{products[1].price}}</small>元</p>
+                        <a href="#" class="btn btn-danger">{{products[1].aLink}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3" v-else-if="name === '摩斯漢堡' ">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img :src="products[2].imgUrl" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{products[2].cardTitle}}</h5>
+                        <p class="card-text">{{products[2].cardText}}</p>
+                        <p class="card-text">單點：個 / NT$<small class="text-body-secondary">{{products[2].price}}</small>元</p>
+                        <a href="#" class="btn btn-danger">{{products[2].aLink}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const app = {
+            data(){
+                return {
+                   bigTitle: "吃了GG會變小的餐點系統",
+                   products:[
+                    {
+                        btnName: "麥當勞",
+                        imgUrl:"https://www.upmedia.mg/upload/content/20210222/dl210222160958800775.jpg",
+                        cardTitle:"大麥克",
+                        cardText:"去麥當勞時，你最喜歡點的餐點是什麼？許多人只要肚子餓，就決定去麥當勞點永遠的1號餐「大麥克」，大麥克還曾獲台灣網路媒體調查為10大美味漢堡排行NO.1，去年又有新成員加入大麥克家族的行列！",
+                        price:"115",
+                        aLink: "怕三小？點下去就對了！"
+                    },
+                    {
+                        btnName: "漢堡王",
+                        imgUrl:"https://burgerkingimage.azureedge.net/product/100040.png",
+                        cardTitle:"辣味三層華堡",
+                        cardText:"好康再加碼！12/26～12/28期間，只要現場出示以上廣告截圖，並購買指定套餐或於漢堡王官網線上購買指定套餐，並選擇12/26～12/28取餐，輸入優惠碼「LOVEBK」，同樣也可免費獲得「原味華堡」１個。",
+                        price:"254",
+                        aLink: "我就是很不想要健康，怎樣？"
+                    },
+                    {
+                        btnName: "摩斯漢堡",
+                        imgUrl:"https://img.girlstalk.cc/images/author/nia/2023%E6%91%A9%E6%96%AF%E6%BC%A2%E5%A0%A1%E6%96%B0%E5%93%81%E5%B9%B2%E8%B2%9DXO%E6%B5%B7%E8%80%81%E7%8F%8D%E7%8F%A0%E5%A0%A1.jpg",
+                        cardTitle:"干貝XO海老珍珠堡",
+                        cardText:"摩斯漢堡有新品可以開吃！自1月6日起推出「干貝XO 海老珍珠堡、和風蕈菇厚牛堡、綜合莓果蒟蒻冰茶、可頌鯛魚燒、摩斯曲奇餅」等新品，除此之外，還有超豐富的抽獎等你來抽，像是日本限量的「MOS和風炸雞睡袋」直接送給你！",
+                        price:"115",
+                        aLink: "管他那麼多，先吃了再說！"                        
+                    }
+                   ],
+                   name:"麥當勞"
+                }
+            },
+            methods:{
+
+            }
+        }
+
+        Vue.createApp(app).mount("#pageMain");
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>
