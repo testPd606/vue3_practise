@@ -12,33 +12,64 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
     <div id="main" class="container">        
-        <div class="w-50 py-3 my-2">
+        <div class="py-2 my-2">
             <label for="productName" class="form-label">產品名稱</label>
-            <input type="text " id="productName" class="form-control" v-model="temp.name">
+            <input type="text" id="productName" class="form-control" v-model="temp.name">
         </div>
-        <div class="w-50 py-3 my-2">
-            <img :src="temp.imgUrl" class="img-fluid" alt="美食">
-            <br><br>
-            <label for="imageNmae" class="form-label">產品圖片</label>
-            <input type="text" id="imageNmae" class="form-control" v-model="temp.imgUrl">
+        <div class="py-2 my-2">
+            <img :src="temp.imageUrl" class="img-fluid" alt="產品圖">
+            <label for="productImg" class="form-label">產品圖</label>
+            <input type="text" id="productImg" class="form-control" v-model="temp.imageUrl">
         </div>
-        <button type="button" class="btn btn-primary" @click="change">更新</button>
+        <button type="button" class="btn btn-primary" @click="confirmEdit">更新</button>
     </div>
 
     <script>
+        const products = [{
+            id:1,
+            imageUrl:"https://media.gq.com.tw/photos/63b6521fd5432c88630d1f8a/1:1/w_1400,h_1400,c_limit/%E4%BA%AC%E9%83%BD%E9%BE%8D%E6%BC%A2%E5%A0%A1_%E5%B1%B1%E8%91%B5%E6%BC%A2%E5%A0%A1.jpg",
+            name:"京都龍漢堡–山葵漢堡",
+            onStock: false
+        },
+        {
+            id:2,
+            imageUrl:"https://4.bp.blogspot.com/-Rki_q3sO3o0/WTLaU3lAQMI/AAAAAAAAAWU/8WHbXBiCXH48ienBrEXwCdOWADgig2GiQCK4B/s1600/nonfeatured-hawaiian-pizza-origins.jpg",
+            name:"必勝客夏威夷披薩",
+            onStock: false
+        },
+        {
+            id:3,
+            imageUrl:"https://images.deliveryhero.io/image/fd-tw/LH/me8l-hero.jpg",
+            name:"麥哲倫美式炸雞",
+            onStock: true
+        },
+        {
+            id:4,
+            imageUrl:"https://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/8851369/0/638302195312330000?v=1",
+            name:"BAC Cake&Sweets-百鑲鮮芒果蛋糕",
+            onStock: false
+        }];
         Vue.createApp({
             data(){
                return {
-                temp: {
-                    name:"馬來西亞美食",
-                    imgUrl:"https://content.skyscnr.com/m/518d873c647231a2/original/GettyImages-178768171.jpg?crop=1224px:647px&quality=100&position=attention"
-                }
+                    productsItem:[],
+                    temp: {
+                        imageUrl:"https://res.klook.com/image/upload/activities/ahtsmk4c2amfwaofvbye.jpg",
+                        name:"珍煮丹–黑糖珍珠奶茶"
+                    }
                } 
             },
             methods:{
-                change(){
-                    console.log(this.temp);
+                confirmEdit(){
+                    this.temp.id = new Date().getTime();
+                    this.temp.onStock = false;
+                    this.productsItem.push(this.temp);
+                    console.log(this.productsItem);
+                    this.temp = {};
                 }
+            },
+            created(){
+                this.productsItem = products;
             }
         }).mount("#main");
     </script>
