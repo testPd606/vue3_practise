@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="align-middle" v-for="item in productsItem" :key="item.id">
+                <tr class="align-middle" v-for="item in productsItem" :key="item.id" :class="{'table-success':item.onStock}">
                     <th scope="row">{{item.name}}</th>
                     <td><img :src="item.imageUrl" class="w-75" alt="item.name"></td>
                     <td class="text-center"><input type="checkbox" v-model="item.onStock"></td>
@@ -48,7 +48,7 @@
             id:1,
             imageUrl:"https://media.gq.com.tw/photos/63b6521fd5432c88630d1f8a/1:1/w_1400,h_1400,c_limit/%E4%BA%AC%E9%83%BD%E9%BE%8D%E6%BC%A2%E5%A0%A1_%E5%B1%B1%E8%91%B5%E6%BC%A2%E5%A0%A1.jpg",
             name:"京都龍漢堡–山葵漢堡",
-            onStock: true
+            onStock: false
         },
         {
             id:2,
@@ -60,7 +60,7 @@
             id:3,
             imageUrl:"https://images.deliveryhero.io/image/fd-tw/LH/me8l-hero.jpg",
             name:"麥哲倫美式炸雞",
-            onStock: false
+            onStock: true
         },
         {
             id:4,
