@@ -9,6 +9,50 @@
 </head>
 <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div id="main" class="container p-3">
+        <form class="border p-3">
+            <h3 class="mb-4">商品資料新增/編輯區</h3>
+            <!-- 商品名稱 -->
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <label for="productName" class="col-form-label">商品名稱：</label>
+                </div>
+                <div class="col">
+                    <input type="text" id="productName" class="form-control" placeholder="例如：aprilia RS660">
+                </div>
+            </div>
+            <!-- 商品圖 -->
+            <div class="row align-items-center mb-3">
+                <div class="col-auto">
+                    <label for="productImg" class="col-form-label">商品圖照：</label>
+                </div>
+                <div class="col">
+                    <input type="text" id="productImg" class="form-control" placeholder="商品圖網址，例如：https://attach.mobile01.com/attach/202005/mobile01-fa1321d0149cbf867c81d1545b43040a.jpg?original=true">
+                </div>
+                <div class="col-3">
+                    <img src="https://attach.mobile01.com/attach/202005/mobile01-fa1321d0149cbf867c81d1545b43040a.jpg?original=true" class="img-fluid rounded" alt="商品圖">
+                </div>
+            </div>
+            <!-- 提交按鈕 -->
+            <div class="d-grid">
+                <button type="button" class="btn btn-primary">確認修改</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        Vue.createApp({
+            data(){
+
+            },
+            methods:{
+
+            },
+            created() {
+                
+            },
+        }).mount("#main");
+    </script>
 </body>
 </html>
