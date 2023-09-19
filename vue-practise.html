@@ -13,14 +13,14 @@
 
     <div id="main" class="container p-3">
         <form class="border p-3">
-            <h3 class="mb-4">商品資料新增/編輯區</h3>
+            <h3 class="mb-4">商品資料<span class="mx-2">新增/編輯</span></h3>
             <!-- 商品名稱 -->
             <div class="row mb-3">
                 <div class="col-auto">
                     <label for="productName" class="col-form-label">商品名稱：</label>
                 </div>
                 <div class="col">
-                    <input type="text" id="productName" class="form-control" placeholder="例如：aprilia RS660">
+                    <input type="text" id="productName" class="form-control" v-model="temp.name">
                 </div>
             </div>
             <!-- 商品圖 -->
@@ -29,10 +29,10 @@
                     <label for="productImg" class="col-form-label">商品圖照：</label>
                 </div>
                 <div class="col">
-                    <input type="text" id="productImg" class="form-control" placeholder="商品圖網址，例如：https://attach.mobile01.com/attach/202005/mobile01-fa1321d0149cbf867c81d1545b43040a.jpg?original=true">
+                    <input type="text" id="productImg" class="form-control" v-model="temp.imgUrl">
                 </div>
                 <div class="col-3">
-                    <img src="https://attach.mobile01.com/attach/202005/mobile01-fa1321d0149cbf867c81d1545b43040a.jpg?original=true" class="img-fluid rounded" alt="商品圖">
+                    <img :src="temp.imgUrl" class="img-fluid rounded" alt="商品圖">
                 </div>
             </div>
             <!-- 提交按鈕 -->
@@ -45,7 +45,10 @@
         Vue.createApp({
             data(){
                 return {
-                    
+                  temp:{
+                    name:"Aprilia RS660",
+                    imgUrl:"https://attach.mobile01.com/attach/202005/mobile01-fa1321d0149cbf867c81d1545b43040a.jpg?original=true"
+                  }  
                 }
             },
             methods:{
