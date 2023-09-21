@@ -11,7 +11,14 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <div id="main" class="container p-3">
-        <h1 class="mb-5">Vue表格資料操作練習</h1>
+        <h1 class="mb-4">Vue表格資料操作練習</h1>
+        <hr>
+        <!-- 新增資料按鈕 -->
+        <div class="d-flex flex-row align-items-center">
+            <button type="button" class="btn btn-primary" @click="addItem">新增資料</button>
+            <p class="mb-0 mx-2">當使用者需要<strong>新增資料</strong>時，請點選左方按鈕開啟編輯區域。</p>
+        </div>
+        <hr>
         <!-- 上方表單 -->
         <table class="table text-center">
             <thead>
@@ -32,7 +39,8 @@
             </tbody>
         </table>
         <!-- 下方區塊 -->
-        <form class="border p-3 bg-secondary bg-opacity-10">
+        <!-- 判斷下方區塊顯示狀態，預設隱藏(未觸發最上方的新增資料按鈕)，或是觸發的資料有id時 -->
+        <form class="border p-3 bg-secondary bg-opacity-10" v-if="displayState || temp.id">
             <h3 class="mb-4">商品資料<span class="mx-2">新增/編輯</span></h3>
             <!-- 商品名稱 -->
             <div class="row mb-3">
@@ -81,39 +89,58 @@
         Vue.createApp({
             data(){
                 return {
-                  //上方區塊 
+                  // 上方區塊 
                   products:[],
-                  //下方區塊
+                  // 下方區塊資料
                   temp:{
                     name:"Aprilia RS660",
                     imgUrl:"https://attach.mobile01.com/attach/202005/mobile01-fa1321d0149cbf867c81d1545b43040a.jpg?original=true"
-                  }  
+                  },
+                  // 下方區塊顯示狀態
+                  displayState: false
                 }
             },
             methods:{
+                // 最上方新增資料按鈕的方法
+                addItem(){
+                    // 指向return的顯示狀態，並改成true
+                    this.displayState = true;
+                    // 清除一開始的預設資料
+                    this.temp = {};
+                },
                 // 上方區塊編輯按鈕的方法
                 editItem(parameter){
                     this.temp = {...parameter};
                 },
                 // 下方區塊提交按鈕的方法
                 submitChanges(){
+                    // 假如temp沒有id時
                     if(!this.temp.id){
+                        // 新增temp的id
                         this.temp.id = new Date().getTime();
+                        // 新增temp的狀態
                         this.temp.state = false;
+                        // 將temp加入資料陣列
                         this.products.push(this.temp);
+                        // 完成後清空區域
                         this.temp = {};
                     } else {
+                        // 要不temp有id時，將data資料中每一筆資料取出
                         this.products.forEach((item2, i) => {
+                            // 當下方的資料id嚴格等於上方資料的id時
                             if(this.temp.id === item2.id){
+                                // 將下方資料新增到data資料陣列中
                                 this.products[i] = this.temp;
+                                // 完成後清空區域
                                 this.temp = {};
                             }
                         });
                     };
-
+                    this.displayState = false;
                 }
             },
             created() {
+                // 將外部資料傳入內部的資料陣列中
                 this.products = externalData;
             },
         }).mount("#main");
