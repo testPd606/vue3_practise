@@ -13,21 +13,21 @@
     <div id="main" class="container p-3">
         <h1 class="mb-5">Vue表格資料操作練習</h1>
         <!-- 上方表單 -->
-        <table class="table">
+        <table class="table text-center">
             <thead>
-              <tr class="row">
-                <th class="col-3">商品名稱</th>
-                <th class="col-5">商品圖片</th>
-                <th class="col-2">商品狀態</th>
-                <th class="col-2">商品編輯</th>
+              <tr>
+                <th>商品名稱</th>
+                <th>商品圖片</th>
+                <th>商品狀態</th>
+                <th>商品編輯</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="row" v-for="item in products" :key="item.id" :class="{'table-warning': item.state}">
-                <td class="col-3">{{item.name}}</td>
-                <td class="col-5"><img :src="item.imgUrl" class="img-fluid rounded" alt="商品圖片"></td>
-                <td class="col-2"><input type="checkbox" class="form-check-input" v-model="item.state"></td>
-                <td class="col-2"><button type="button" class="btn btn-primary">編輯</button></td>
+              <tr v-for="item in products" :key="item.id" :class="{'table-warning': item.state}">
+                <td class="w-15 align-middle">{{item.name}}</td>
+                <td class="w-50 align-middle"><img :src="item.imgUrl" class="img-fluid rounded" alt="商品圖片"></td>
+                <td class="align-middle"><input type="checkbox" class="form-check-input" v-model="item.state"></td>
+                <td class="align-middle"><button type="button" class="btn btn-primary" @click="editItem(item)">編輯</button></td>
               </tr>
             </tbody>
         </table>
@@ -91,12 +91,26 @@
                 }
             },
             methods:{
-                // submitChanges是下方區塊提交按鈕的方法
+                // 上方區塊編輯按鈕的方法
+                editItem(parameter){
+                    this.temp = {...parameter};
+                },
+                // 下方區塊提交按鈕的方法
                 submitChanges(){
-                    this.temp.id = new Date().getTime();
-                    this.temp.state = false;
-                    this.products.push(this.temp);
-                    this.temp = {};
+                    if(!this.temp.id){
+                        this.temp.id = new Date().getTime();
+                        this.temp.state = false;
+                        this.products.push(this.temp);
+                        this.temp = {};
+                    } else {
+                        this.products.forEach((item2, i) => {
+                            if(this.temp.id === item2.id){
+                                this.products[i] = this.temp;
+                                this.temp = {};
+                            }
+                        });
+                    };
+
                 }
             },
             created() {
