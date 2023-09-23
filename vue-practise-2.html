@@ -15,6 +15,15 @@
         <h1 class="my-3" v-text="take"></h1>
         <p>{{name}}在<span>{{position}}</span>吃早餐</p>
         <div v-html="tagHtml"></div>
+        <div class="border p-3 my-3 w-25">
+            <p v-once>{{name}}在{{position}}吃早餐</p>
+            <input type="text" class="form-control" v-model="position">
+        </div>
+        <p>樣板字面值：<span>{{`${name}在${position}吃早餐`}}</span></p>
+        <p>反轉字串：{{text.split("").reverse().join("")}}</p>
+        <p>綁定methods：{{say(name)}}</p>
+        <p>直接顯示結構上的資料：{{originalData}}</p>
+        <p v-pre>不執行渲染的大雙括弧：{{}}</p>
     </div>
 
     <script>
@@ -24,11 +33,15 @@
                     take:"標籤渲染 v-text",
                     name: "小明",
                     position: "Q Burger",
-                    tagHtml:"<button type='button' class='btn btn-primary'>v-html按鈕</button>"
+                    tagHtml:"<button type='button' class='btn btn-primary'>v-html按鈕</button>",
+                    text:"美式、霜淇淋買1送1！超商、連鎖咖啡「補班限定優惠」快衝",
+                    originalData:["漢堡","炸雞","可樂","蛋糕","冰激淋"]
                 }
             },
             methods:{
-
+                say(e){
+                    return `${e}在${this.position}吃早餐`;
+                }
             }
         }).mount("#main");
     </script>
