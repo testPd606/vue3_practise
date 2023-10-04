@@ -13,14 +13,47 @@
     <div id="main" class="container">
         <br><br>
         <h1 class="text-center">陣列迴圈</h1>
-        <ul class="list-group my-3 w-50 mx-auto">
-            <li class="list-group-item" v-for="(item, i) in arryTemp">{{i+1}} - {{item.name}}，NT${{item.price}}元</li>
-        </ul>
+        <table class="mx-auto">
+            <tbody>
+                <tr v-for="(item, i) in arryTemp" :key="item.name">
+                    <td class="p-2">{{i+1}} - {{item.name}}，NT${{item.price}}元</td>
+                    <td class="p-2"><input type="text" class="form-control"></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2"><hr></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-primary" @click="reverseArry">確定</button>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
         <br><br>
         <h1 class="text-center">純數值迴圈</h1>
         <ul class="list-group my-3 w-50 mx-auto">
             <li class="list-group-item" v-for="item2 in 10">數字：{{item2}}</li>
         </ul>
+        <br><br>
+        <h1 class="text-center">模板迴圈</h1>
+        <table class="table w-50 mx-auto align-middle">
+            <tbody>
+                <template v-for="(item3, id) in arryTemp" :key="item3.name">
+                    <tr>
+                        <th rowspan="2">{{id+1}}</th>
+                        <th rowspan="2">{{item3.name}}</th>
+                    </tr>
+                    <tr>
+                        <th>NT:{{item3.price}}元</th>
+                        <th>狀態：{{item3.state? "尚有庫存":"缺貨"}}</th>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
     </div>
     <script>
         Vue.createApp({
@@ -56,7 +89,9 @@
                 }
             },
             methods:{
-
+                reverseArry(){
+                    this.arryTemp.reverse();
+                }
             }
         }).mount("#main");
     </script>
