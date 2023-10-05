@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-if練習</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div id="main" class="container">
+        <br>
+        <h1 class="text-center">簡易切換</h1>
+        <div class="row justify-content-center pt-3">
+            <div class="col-auto"><div class="box rounded-circle bg-danger" v-if="state"></div></div>
+            <div class="col-auto"><div class="box rounded-circle bg-success" v-else></div></div>
+            <div class="w-100 my-3"></div>
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-primary" @click="change('state')">開關</button>             
+            </div>
+        </div>
+        <br><br>
+        <h1 class="text-center">v-if-else</h1>
+        <div class="list-group w-50 mx-auto">
+            <a href="#" class="list-group-item" @click="link='包子'" :class="{'active':link==='包子'}">包子</a>
+            <a href="#" class="list-group-item" @click="link='蔥油餅'" :class="{'active':link==='蔥油餅'}">蔥油餅</a>
+            <a href="#" class="list-group-item" @click="link='飯糰'" :class="{'active':link==='飯糰'}">飯糰</a>
+        </div>
+        <br><br>
+        <h1 class="text-center">v-for和v-if混用</h1>
+        <table class="table w-50 mx-auto">
+            <thead>
+                <tr>
+                    <th>商品名稱</th>
+                    <th>商品價格</th>
+                    <th>銷售狀態</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template v-for="item in products" :key="item.name">
+                    <tr v-if="item.price >= 40">
+                        <td>{{item.name}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.state}}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        Vue.createApp({
+            data(){
+                return {
+                    state:false,
+                    link:"包子",
+                    products:[
+                        {
+                            name:"肉包",
+                            price: 50,
+                            state: false
+                        },
+                        {
+                            name:"菜包",
+                            price: 40,
+                            state: true
+                        },
+                        {
+                            name:"芝麻包",
+                            price: 35,
+                            state: false
+                        }
+                    ]
+                }
+            },
+            methods:{
+                change(parameter){
+                    this[parameter] = !this[parameter];
+                }
+            }
+        }).mount("#main");
+    </script>
+</body>
+</html>
