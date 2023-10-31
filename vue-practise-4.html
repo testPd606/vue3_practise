@@ -29,6 +29,11 @@
             <a href="#" class="list-group-item" @click="link='蔥油餅'" :class="{'active':link==='蔥油餅'}">蔥油餅</a>
             <a href="#" class="list-group-item" @click="link='飯糰'" :class="{'active':link==='飯糰'}">飯糰</a>
         </div>
+        <div class="my-3 w-50 mx-auto">
+            <p v-if="link === '包子'">※ 您點的餐點是：包子</p>
+            <p v-else-if="link === '蔥油餅'">※ 您點的餐點是：蔥油餅</p>
+            <p v-else-if="link === '飯糰'">※ 您點的餐點是：飯糰</p>
+        </div>
         <br><br>
         <h1 class="text-center">v-for和v-if混用</h1>
         <table class="table w-50 mx-auto">
