@@ -12,62 +12,75 @@
 
     <div id="app">
         <div class="container gx-2">
-            <div class="row gx-3 bg-light py-3">
+          <div class="row gx-3 bg-light py-3">
             <div class="col-md-4">
-                <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action" v-for="item in products" :key="item.name" @click.prevent="selectItem(item)" :class="{active : tempInfo.name==item.name }">
-                    <h6 class="card-title mb-1">{{item.name}}</h6>
-                    <div class="d-flex align-items-center justify-content-between">
+              <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action"
+                v-for="item in products" :key="item.name"
+                @click.prevent="selectShoppingList(item)"
+                :class="{active:shoppingList.name == item.name}">
+                  <h6 class="card-title mb-1">{{item.name}}</h6>
+                  <div class="d-flex align-items-center justify-content-between">
                     <p class="mb-0"><small>{{item.engName}}</small></p>
                     <p class="mb-0"><small>NT$ {{item.price}}</small></p>
-                    </div>
+                  </div>
                 </a>
-                </div>
+              </div>
             </div>
             <div class="col-md-8">
-                <div class="card mb-2">
-                <div class="position-absolute text-white d-flex align-items-center justify-content-center active" style="top: 0;bottom: 0;left: 0;right: 0;background-color: rgba(0, 0, 0, 0.65); z-index: 100;" v-if="!tempInfo.name">請先選擇飲品</div>
+              <div class="card mb-2">
+                <div class="position-absolute text-white d-flex align-items-center justify-content-center active" style="top: 0;bottom: 0;left: 0;right: 0;background-color: rgba(0, 0, 0, 0.65); z-index: 100;"
+                v-if="!shoppingList.name">請先選擇飲品</div>
                 <div class="card-body px-4">
-                    <div class="mb-3">
+                  <div class="mb-3">
                     <label for="productNum" class="form-label">數量</label>
-                    <input type="number" class="form-control" id="productNum" placeholder="數量" min="0" v-model="tempInfo.count">
-                    </div>
-                    <div class="mb-3">
+                    <input type="number" class="form-control" id="productNum" placeholder="數量" min="0" v-model="shoppingList.count">
+                  </div>
+                  <div class="mb-3">
                     <label for="productNum" class="form-label d-block">冰塊*</label>
-                    <div class="form-check form-check-inline" v-for="(item2, id) in iceType" :key="'ice' + id">
-                        <input class="form-check-input" name="iceType" type="radio" :id="'ice' + id" :value="item2" v-model="tempInfo.iceAll">
-                        <label class="form-check-label" :for="'ice' + id">{{item2}}</label>
+                    <div class="form-check form-check-inline"
+                    v-for="(item, num) in iceType" :key="'ice' + num">
+                      <input class="form-check-input" name="iceType" type="radio" :id="'ice' + num"
+                      :value="item" v-model="shoppingList.addIce">
+                      <label class="form-check-label" :for="'ice' + num">{{item}}</label>
                     </div>
-                    </div>
-                    <div class="mb-3">
+                  </div>
+                  <div class="mb-3">
                     <label for="productNum" class="form-label d-block">甜度*</label>
-                    <div class="form-check form-check-inline" v-for="(item2, id) in sugarType" :key="'sugar' + id">
-                        <input class="form-check-input" name="sugarType" type="radio" :id="'sugar' + id" :value="item2" v-model="tempInfo.sugarAll">
-                        <label class="form-check-label" :for="'sugar' + id">{{item2}}</label>
+                    <div class="form-check form-check-inline"
+                    v-for="(item, num) in sugarType" :key="'sugar' + num">
+                      <input class="form-check-input" name="sugarType" type="radio" :id="'sugar' + num"
+                      :value="item" v-model="shoppingList.addSugar">
+                      <label class="form-check-label" :for="'sugar' + num">{{item}}</label>
                     </div>
-                    </div>
-                    <div class="mb-3">
+                  </div>
+                  <div class="mb-3">
                     <label for="productNum" class="form-label d-block">加料</label>
-                    <div class="form-check form-check-inline" v-for="(item2, id) in toppingsType" :key="'topping' + id">
-                        <input class="form-check-input" type="checkbox" :id="'topping' + id" :value="item2" v-model="tempInfo.toppingAll">
-                        <label class="form-check-label" :for="'topping' + id">{{item2}}</label>
+                    <div class="form-check form-check-inline"
+                    v-for="(item, num) in toppingsType" :key="'topping' + num">
+                      <input class="form-check-input" type="checkbox" :id="'topping' + num"
+                      :value="item" v-model="shoppingList.addToppings">
+                      <label class="form-check-label" :for="'topping' + num">{{item}}</label>
                     </div>
-                    </div>
-                    <div class="mb-3">
+                  </div>
+                  <div class="mb-3">
                     <label for="productNotice" class="form-label">備註</label>
-                    <textarea class="form-control" id="productNotice" rows="2" v-model="tempInfo.remark"></textarea>
-                    </div>
-                    <div class="d-flex gap-2">
-                    <button class="btn btn-outline-primary w-100" type="button" @click.prevent="resetOrder">取消</button>
-                    <button class="btn btn-primary w-100" type="button" @click.prevent="addOrder(tempInfo)">加入</button>
-                    </div>
+                    <textarea class="form-control" id="productNotice" rows="2"
+                    v-model="shoppingList.remark"></textarea>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-outline-primary w-100" type="button"
+                    @click.prevent="clearOrder()">取消</button>
+                    <button class="btn btn-primary w-100" type="button"
+                    @click.prevent="addShoppingCar(shoppingList)">加入</button>
+                  </div>
                 </div>
-                </div>
-                <div class="card">
+              </div>
+              <div class="card">
                 <div class="card-body">
-                    <table class="table">
+                  <table class="table">
                     <thead>
-                        <tr>
+                      <tr>
                         <th scope="col">品項</th>
                         <th scope="col">冰塊</th>
                         <th scope="col">甜度</th>
@@ -75,178 +88,137 @@
                         <th scope="col">單價</th>
                         <th scope="col">數量</th>
                         <th scope="col">小計</th>
-                        </tr>
+                      </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, id) in itemSub" :key="'order' + id">
+                      <tr v-for="(item, num) in shoppingCar" :key="'shoppingCar' + num">
                         <th scope="row">{{item.name}}<br>
-                            <small class="text-muted fw-normal">備註：{{item.remark}}</small>
+                          <small class="text-muted fw-normal">備註：{{item.remark}}</small>
                         </th>
-                        <td>{{item.iceAll}}</td>
-                        <td>{{item.sugarAll}}</td>
-                        <td>{{item.toppingAll.toString()}}</td>
-                        <td>{{item.price + item.toppingAll.length * 10}}</td>
+                        <td>{{item.addIce}}</td>
+                        <td>{{item.addSugar}}</td>
+                        <td>{{item.addToppings.toString()}}</td>
+                        <td>{{item.price + item.addToppings.length * 10}}</td>
                         <td>{{item.count}}</td>
-                        <td class="text-end">{{item.subTotal}}</td>
-                        </tr>
+                        <td class="text-end">{{item.subtotal}}</td>
+                      </tr>
                     </tbody>
-                    </table>
-                    <p class="text-end">共 NT$ {{orderTitle}} 元</p>
-                    <button class="btn btn-sm btn-secondary w-100" @click.prevent="resetListOrder">重新選擇</button>
+                  </table>
+                  <p class="text-end">共 NT$ {{total}} 元</p>
+                  <button class="btn btn-sm btn-secondary w-100"
+                  @click.prevent="reselect()">重新選擇</button>
                 </div>
-                </div>
+              </div>
             </div>
-            </div>
+          </div>
         </div>
-    </div>
-
-    <script>
-    const App = {
+      </div>
+      
+      <script>
+      const App = {
         data() {
-            return {
-                tempInfo:{
-                    // 品項點擊後的暫存資料
-                },
-                itemSub:[], //品項小計表格的儲存區
-                orderTitle:0, //品項小計表格的總金額預設為0
-                iceType: ['正常冰', '少冰', '微冰', '去冰', '熱'],
-                sugarType: ['全糖', '七分', '半糖', '三分', '無糖'],
-                toppingsType: ['珍珠', '粉條', '小粉圓', '椰果', '芋頭'],
-                products: [
-                    {
-                    name: '珍珠鮮奶茶',
-                    engName: 'Pearl Milk Tea',
-                    price: 60,
-                    },
-                    {
-                    name: '鮮奶茶',
-                    engName: 'Milk Tea',
-                    price: 50,
-                    },
-                    {
-                    name: '古意冬瓜茶',
-                    engName: 'Winter Melon Drink',
-                    price: 30,
-                    },
-                    {
-                    name: '蜜香紅茶',
-                    engName: 'Black Tea',
-                    price: 30,
-                    },
-                    {
-                    name: '包種青茶',
-                    engName: 'Black Tea',
-                    price: 35,
-                    },
-                    {
-                    name: '檸檬烏龍',
-                    engName: 'Lemon Oolong Tea',
-                    price: 55,
-                    },
-                    {
-                    name: '薑母茶',
-                    engName: 'Ginger Tea',
-                    price: 55,
-                    },
-                    {
-                    name: '青草茶',
-                    engName: 'Herbal Tea',
-                    price: 35,
-                    },
-                    {
-                    name: '金桔檸檬',
-                    engName: 'Kumquat Lemonade',
-                    price: 40,
-                    },
-                    {
-                    name: '柳澄青茶',
-                    engName: 'Orange Mountain Tea',
-                    price: 45,
-                    },
-                ],
-            }
+          return {
+            shoppingList:{},
+            shoppingCar:[],
+            total: 0,
+            iceType: ['正常冰', '少冰', '微冰', '去冰', '熱'],
+            sugarType: ['全糖', '七分', '半糖', '三分', '無糖'],
+            toppingsType: ['珍珠', '粉條', '小粉圓', '椰果', '芋頭'],
+            products: [
+              {
+                name: '珍珠鮮奶茶',
+                engName: 'Pearl Milk Tea',
+                price: 60,
+              },
+              {
+                name: '鮮奶茶',
+                engName: 'Milk Tea',
+                price: 50,
+              },
+              {
+                name: '古意冬瓜茶',
+                engName: 'Winter Melon Drink',
+                price: 30,
+              },
+              {
+                name: '蜜香紅茶',
+                engName: 'Black Tea',
+                price: 30,
+              },
+              {
+                name: '包種青茶',
+                engName: 'Black Tea',
+                price: 35,
+              },
+              {
+                name: '檸檬烏龍',
+                engName: 'Lemon Oolong Tea',
+                price: 55,
+              },
+              {
+                name: '薑母茶',
+                engName: 'Ginger Tea',
+                price: 55,
+              },
+              {
+                name: '青草茶',
+                engName: 'Herbal Tea',
+                price: 35,
+              },
+              {
+                name: '金桔檸檬',
+                engName: 'Kumquat Lemonade',
+                price: 40,
+              },
+              {
+                name: '柳澄青茶',
+                engName: 'Orange Mountain Tea',
+                price: 45,
+              },
+            ],
+          }
         },
         methods: {
-            selectItem(item){
-                // 點擊選取「左邊品項」的方法，
-                // 加到「暫存資料tempInfo」
-                this.tempInfo = {
-                    ...item,
-                    // 預防因為調用而
-                    // 改動到原本的products
-                    count:1,
-                    // 在點擊「左邊品項」時，
-                    // 先給品項加入一個數量，
-                    // 為了要方便測試「小計」的結果是否正確，
-                    // 因此數量的預設值先給2
-                    // 等到「品項小計表格」完成後
-                    // 再改回原來的預設值1
-                    iceAll:"",
-                    // 新增調整冰塊的變數
-                    sugarAll:"",
-                    // 新增調整甜度的變數
-                    toppingAll:[],
-                    // 新增加點食材的變數
-                    // 因為是複選，所以使用陣列
-                    remark:"",
-                    // 新增備註內容的變數
-                };
-            },
-            titleCount(){
-                this.orderTitle = 0;
-                // 在計算每一筆總金額時，必須先清空變數
-                // 從零元開始計算
-                this.itemSub.forEach((item)=>{
-                    // 將「品項小計表格的儲存區」中的
-                    // 每一筆品項資料撈出來
-                    this.orderTitle += item.subTotal;
-                    // 每一筆品項資料小計都依序疊加到總金額
-                });
-            },
-            // 定義「計算品項總金額」的方法
-            addOrder(tempInfo){
-                // 點擊「品項細節區」的「加入」按鈕方法
-                const newOrder = {
-                    ...tempInfo,
-                    // 將「暫存資料tempInfo」加到新變數中
-                    // 並解構（避免影響到原本的「暫存資料tempInfo」）
-                    subTotal: (tempInfo.price + tempInfo.toppingAll.length * 10) * tempInfo.count,
-                    // 再新增品項的「單一小計subTotal」方法
-                    // 將「數量加料區」被點選的食材用長度來計算總共加了多少
-                    // 每多加一份料，多10元
-                    // 最後再乘以數量
-                };
-                // 定義一個新的變數「newOrder」
-                
-                this.itemSub.push(newOrder);                
-                // 將「新變數newOrder」
-                // 加到下方的「品項小計itemSub」中
+          selectShoppingList(parameter){
+            this.shoppingList = {
+                ...parameter,
+                count:2,
+                addIce:"",
+                addSugar:"",
+                addToppings:[],
+                remark:"",
+            };
+          },
 
-                this.titleCount();
-                // 「計算品項總金額」會在「品項細節區」
-                // 的「加入」按鈕被點擊時觸發並執行
+          countTotal(){
+            this.total = 0;
+            this.shoppingCar.forEach((item) => {
+                this.total += item.subtotal;
+            });
+          },
 
-                this.resetOrder();
-                // 執行清空「數量加料區」選單
-            },
-            resetOrder(){
-                this.tempInfo = {};
-                // 當品項點選完送到下方「品項細節區」後，
-                // 就清空「數量加料區」選單，
-                // 讓「數量加料區」選單恢復尚未選擇品項時的狀態
-                this.remark = "";
-                // 備註也必須跟著清空
-            },
-            resetListOrder(){
-                this.itemSub=[];
-                this.orderTitle=0;
-                // 點選重新選擇時，
-                // 清空「品項細節區 + 總金額」
-            }
+          addShoppingCar(parameter){
+            const recalculate = {
+                ...parameter,
+                subtotal:(this.shoppingList.price + this.shoppingList.addToppings.length * 10) * this.shoppingList.count,
+            };
+            this.shoppingCar.push(recalculate);
+            this.countTotal();
+            this.clearOrder();
+          },
+
+          clearOrder(){
+            this.shoppingList = {};
+          },
+
+          reselect(){
+            this.shoppingCar = [];
+            this.total = 0;
+          },
         },
-    }; 
-
-    Vue.createApp(App).mount('#app');
-    </script>
+      };
+      
+      Vue.createApp(App).mount('#app');
+      </script>
 </body>
 </html>
