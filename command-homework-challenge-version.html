@@ -89,17 +89,21 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="item in shoppingCart" :key="item.name">
-                      <th scope="row">{{item.name}}<br>
-                        <small class="text-muted fw-normal">備註：{{item.remark}}</small>
-                      </th>
-                      <td>{{item.addIce}}</td>
-                      <td>{{item.addSugar}}</td>
-                      <td>{{item.addTopping.toString()}}</td>
-                      <td>{{item.price + item.addTopping.length * 10}}</td>
-                      <td>{{item.count}}</td>
-                      <td class="text-end">{{item.subtotal}}</td>
-                    </tr>
+                    <template v-for="item in shoppingCart" :key="item.name">
+                      <tr>
+                        <th scope="row">{{item.name}}<br>
+                          <small class="text-muted fw-normal" v-if="item.remark.length>0">
+                            備註：{{item.remark}}
+                          </small>
+                        </th>
+                        <td>{{item.addIce}}</td>
+                        <td>{{item.addSugar}}</td>                      
+                        <td>{{item.addTopping.toString()?item.addTopping.toString():"無"}}</td>
+                        <td>{{item.price + item.addTopping.length * 10}}</td>
+                        <td>{{item.count}}</td>
+                        <td class="text-end">{{item.subtotal}}</td>
+                      </tr>
+                    </template>
                   </tbody>
                 </table>
                 <p class="text-end">共 NT$ {{total}} 元</p>
@@ -124,23 +128,27 @@
                 <th scope="col">小計</th>
               </tr>
             </thead>
-            <tbody>              
-              <tr v-for="item in finalOrder.checklist" :key="item.name">
-                <th scope="row">{{item.name}}<br>
-                  <small class="text-muted fw-normal">備註：{{item.remark}}</small>
-                </th>
-                <td>{{item.addIce}}</td>
-                <td>{{item.addSugar}}</td>
-                <td>{{item.addTopping.toString()}}</td>
-                <td>{{item.price + item.addTopping.length * 10}}</td>
-                <td>{{item.count}}</td>
-                <td class="text-end">{{item.subtotal}}</td>
-              </tr>
+            <tbody>
+              <template v-for="item in finalOrder.checklist" :key="item.name">
+                <tr>
+                  <th scope="row">{{item.name}}<br>
+                    <small class="text-muted fw-normal" v-if="item.remark.length>0">
+                      備註：{{item.remark}}
+                    </small>
+                  </th>
+                  <td>{{item.addIce}}</td>
+                  <td>{{item.addSugar}}</td>
+                  <td>{{item.addTopping.toString()?item.addTopping.toString():"無"}}</td>
+                  <td>{{item.price + item.addTopping.length * 10}}</td>
+                  <td>{{item.count}}</td>
+                  <td class="text-end">{{item.subtotal}}</td>
+                </tr>
+              </template>
             </tbody>
           </table>
           <p class="mt-3 mb-1">訂單成立時間：{{finalOrder.dateTime}}</p>
           <p class="mb-1">餐點數：{{finalOrder.checklist.length}}</p>
-          <p class="mb-1">付款狀態：未付款</p>
+          <p class="mb-1">付款狀態：{{finalOrder.isState? "已付款" : "未付款"}}</p>
           <p class="text-end mt-auto">共 NT$ {{finalOrder.numOrder}} 元</p>
         </div>
       </div>
@@ -158,6 +166,7 @@
             dateTime:"",
             numOrder: 0            
           },
+          isState:false,
           iceType: ['正常冰', '少冰', '微冰', '去冰', '熱'],
           sugarType: ['全糖', '七分', '半糖', '三分', '無糖'],
           toppingsType: ['珍珠', '粉條', '小粉圓', '椰果', '芋頭'],
@@ -187,7 +196,7 @@
               engName: 'Milk Tea',
               price: 50,
               defaults: {
-                toppings: [''],
+                toppings: [],
                 sugar: '',
                 ice: '',
               }
@@ -197,7 +206,7 @@
               engName: 'Winter Melon Drink',
               price: 30,
               defaults: {
-                toppings: [''],
+                toppings: [],
                 sugar: '全糖',
                 ice: '',
               }
@@ -207,7 +216,7 @@
               engName: 'Black Tea',
               price: 30,
               defaults: {
-                toppings: [''],
+                toppings: [],
                 sugar: '',
                 ice: '',
               }
@@ -217,7 +226,7 @@
               engName: 'Black Tea',
               price: 35,
               defaults: {
-                toppings: [''],
+                toppings: [],
                 sugar: '',
                 ice: '',
               }
@@ -227,7 +236,7 @@
               engName: 'Lemon Oolong Tea',
               price: 55,
               defaults: {
-                toppings: [''],
+                toppings: [],
                 sugar: '',
                 ice: '',
               }
@@ -237,7 +246,7 @@
               engName: 'Ginger Tea',
               price: 55,
               defaults: {
-                toppings: [''],
+                toppings: [],
                 sugar: '',
                 ice: '熱',
               }
@@ -247,7 +256,7 @@
               engName: 'Herbal Tea',
               price: 35,
               defaults: {
-                toppings: [''],
+                toppings: [],
                 sugar: '',
                 ice: '',
               }
@@ -257,7 +266,7 @@
               engName: 'Kumquat Lemonade',
               price: 40,
               defaults: {
-                toppings: [''],
+                toppings: [],
                 sugar: '',
                 ice: '',
               }
@@ -267,7 +276,7 @@
               engName: 'Orange Mountain Tea',
               price: 45,
               defaults: {
-                toppings: [''],
+                toppings: [],
                 sugar: '',
                 ice: '',
               }
@@ -289,7 +298,7 @@
             count:1,
             addIce:parameter.defaults.ice !==""? parameter.defaults.ice:"正常冰",
             addSugar:parameter.defaults.sugar !==""? parameter.defaults.sugar:"全糖",
-            addTopping:[],
+            addTopping:parameter.defaults.toppings !==""? parameter.defaults.toppings:"",
             remark:"",
           }
         },
