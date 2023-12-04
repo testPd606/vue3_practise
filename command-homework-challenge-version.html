@@ -89,21 +89,19 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <template v-for="item in shoppingCart" :key="item.name">
-                      <tr>
-                        <th scope="row">{{item.name}}<br>
-                          <small class="text-muted fw-normal" v-if="item.remark.length>0">
-                            備註：{{item.remark}}
-                          </small>
-                        </th>
-                        <td>{{item.addIce}}</td>
-                        <td>{{item.addSugar}}</td>                      
-                        <td>{{item.addTopping.toString()?item.addTopping.toString():"無"}}</td>
-                        <td>{{item.price + item.addTopping.length * 10}}</td>
-                        <td>{{item.count}}</td>
-                        <td class="text-end">{{item.subtotal}}</td>
-                      </tr>
-                    </template>
+                    <tr v-for="item in shoppingCart" :key="item.name">
+                      <th scope="row">{{item.name}}<br>
+                        <small class="text-muted fw-normal" v-if="item.remark !==''">
+                          備註：{{item.remark}}
+                        </small>
+                      </th>
+                      <td>{{item.addIce}}</td>
+                      <td>{{item.addSugar}}</td>                      
+                      <td>{{item.addTopping.toString()?item.addTopping.toString():"無"}}</td>
+                      <td>{{item.price + item.addTopping.length * 10}}</td>
+                      <td>{{item.count}}</td>
+                      <td class="text-end">{{item.subtotal}}</td>
+                    </tr>
                   </tbody>
                 </table>
                 <p class="text-end">共 NT$ {{total}} 元</p>
