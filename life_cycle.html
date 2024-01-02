@@ -15,9 +15,10 @@
           <span v-else>顯示元件</span>
         </button>
         <hr>
-        <keep-alive>
+        <!-- <keep-alive>
             <child v-if="isShowing"></child>
-        </keep-alive>        
+        </keep-alive>         -->
+        <child v-if="isShowing"></child>
     </div>
       
     <script type="text/x-template" id="childarea">
