@@ -15,7 +15,7 @@
           <span v-else>顯示元件</span>
         </button>
         <hr>
-        <child v-if="isShowing"></child>
+        <child v-show="isShowing"></child>
     </div>
       
     <script type="text/x-template" id="childarea">
@@ -58,8 +58,8 @@
         beforeUnmount(){
             console.log(`beforeUnmount! ${this.text}`);
         },
-        unmount(){
-            console.log(`unmount! ${this.text}`);
+        unmounted(){
+            console.log(`unmounted! ${this.text}`);
         }
         };
         const App = {
