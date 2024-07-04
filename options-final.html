@@ -28,100 +28,95 @@
             <div id="app" class="mt-2">
               <div class="row h-100">
                 <div class="col-md-3 h-100 d-flex flex-column">
-                  <!-- 快取搜尋 -->
                   <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="search" placeholder="search" v-model="cacheSearch">
+                    <input v-model="cacheSearch" type="text" class="form-control" id="search" placeholder="search">
                     <label for="search">search</label>
                   </div>
-                  <!-- 快取搜尋 -->
-                  <!-- 選單 -->
                   <div class="list-group option">
-                    <label class="list-group-item" v-for="(item, id) in filterData" :key="id + 'place'">
-                      <input class="form-check-input me-1" type="radio" name="area" @click="cacheArea = item"
-                      :value="item" id="id + 'place'" >
+                    <label v-for="(item, keys) in filterSearch" class="list-group-item" :key="keys + 'filter'">
+                      <input @click="cacheArea = item" class="form-check-input me-1" type="radio" :value="item"
+                             name="area" :checked="cacheArea.Name === item.Name">
                       {{ item.Name }}
                     </label>
                   </div>
-                  <!-- 選單 -->                  
                 </div>
                 <div class="col-md-8 h-100 d-flex flex-column">
-                  <!-- 瀏覽日誌 -->
                   <div class="form-floating">
-                    <select id="cacheArea" class="form-select w-50 mb-2" aria-label="select example" v-model="cacheArea">
-                      <option selected disabled>瀏覽紀錄</option>
-                      <option v-for="(item, id) in browseLog" :value="item">{{id+1}}.{{item.Name}}</option>
+                    <select v-model="cacheArea" id="cacheArea" class="form-select w-50 mb-2" aria-label="select example">
+                      <option selected value="" disabled>瀏覽紀錄</option>
+                      <option v-for="(item, keys) in browseLog" :value="item">{{ keys + 1 }}.{{ item.Name }}</option>
                     </select>
                     <label for="cacheArea">瀏覽紀錄</label>
                   </div>
-                  <!-- 瀏覽日誌 -->
-                  <!-- 右邊的區塊 -->
-                  <div v-if="cacheArea.Name">
-                    <div class="card overflow-auto">
+                  <div class="card overflow-auto">
+                    <div v-if="cacheArea.Name">
                       <img :src="cacheArea.Picture1" class="card-img-top" :alt="cacheArea.Name">
                       <iframe width="100%" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                              :src=`https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=${cacheArea.Py},${cacheArea.Px}(${cacheArea.Name})&z=16&output=embed`></iframe>
+                        :src=`https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=${cacheArea.Py},${cacheArea.Px}(${cacheArea.Name})&z=16&output=embed`></iframe>
                       <div class="card-body">
                         <h5 class="card-title">{{ cacheArea.Name }}</h5>
                         <p>{{ cacheArea.Description }}</p>
                       </div>
                     </div>
-                  </div>
-                  <div v-else>
-                    <div class="card overflow-auto">
-                      <img src="https://raw.githubusercontent.com/hexschool/KCGTravel/master/image/%E4%B8%89%E6%B0%91%E5%8D%80/%E4%B8%AD%E9%83%BD%E6%BF%95%E5%9C%B0%E5%85%AC%E5%9C%9207.jpg" class="card-img-top" alt="中都愛河濕地公園">
-                      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3682.1965870486706!2d120.28073117713927!3d22.64645787943926!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e0444830f7f71%3A0x6579cee492b8e618!2z5Lit6YO95oSb5rKz5r-V5Zyw5YWs5ZyS!5e0!3m2!1szh-TW!2stw!4v1713864173289!5m2!1szh-TW!2stw" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                      <div class="card-body">
-                        <h5 class="card-title">中都愛河濕地公園</h5>
-                        <p>串起高雄城市生態綠廊的中都愛河濕地公園座落於愛河南側的十全與九如路之間，全長約2.5公里，佔地達七千餘平方公尺。為了打造與市民生活融合的「水岸花香的永續生態城市」，愛河濕地公園以生態工法構築邊坡，重現早期溼地豐富生態棲息環境。園區設置原木建築為遊客解說中心，另有木造涼亭、吊橋、潮汐親水平台以及漂流木為設計主軸的燈具座椅等設施，質樸中深具原野氣息，而仿自然的複層林相植栽也使市區重現豐富林相。悠遊於綠油油曲折玲瓏的河岸可見各種水鳥飛翔駐留、紅樹林和濕地更使愛河重現盎然生機。由於中都濕地公園打造出兼具自然生態、教育解說及民眾休憩等眾多功能，又完整呈現愛河沿岸多樣性的風貌，2012年榮獲「全球卓越建設獎」殊榮，也因此有高雄都會桃花源的美稱。</p>
-                      </div>
+                    <div v-else class="card-body">
+                      請選擇場域
                     </div>
                   </div>
-                  <!-- 右邊的區塊 -->
                 </div>
               </div>
             </div>
-      
-            <script>            
-            const App = {
-              data() {
-                return {
-                  datastore: [],//資料儲存
-                  cacheArea: '',//快取區
-                  cacheSearch: '',//快取搜尋
-                  browseLog: [],//瀏覽日誌
-                };
-              },
-              methods:{
-                getData(){
-                  const apiUrl = 'https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json';
             
-                  axios.get(apiUrl).then((res) => {
-                    this.datastore = res.data.result.records;                
-                  })
-                }
-              },
-              created(){
-                this.getData();
-              },
-              computed:{
-                filterData(){
-                  return this.datastore.filter((item)=>item.Name.match(this.cacheSearch));
+            <script>
+              const App = {
+                data() {
+                  return {
+                    datastore: [],
+                    cacheArea: '',
+                    cacheSearch: '',
+                    browseLog: [],
+                  };
                 },
-              },
-              watch:{
-                cacheArea(){
-                  if(this.browseLog.length < 10){
-                    this.browseLog.push(this.cacheArea);
-                  } else {
-                    this.browseLog.shift();
-                    this.browseLog.push(this.cacheArea);
-                  }
-                }
-              }
-            };
+                methods: {
+                  getData() {
+                    const apiUrl = 'https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json';
             
-            Vue.createApp(App).mount('#app');      
+                    axios.get(apiUrl).then((res) => {
+                      this.datastore = res.data.result.records;
+                    })
+                  },
+                },
+                computed: {
+                  filterSearch() {
+                    return this.datastore.filter((item) => item.Name.match(this.cacheSearch));
+                  },
+                },
+                watch: {
+                  cacheArea() {
+                    if (this.browseLog.length < 10) {
+                      this.browseLog.push(this.cacheArea);
+                    } else {
+                      this.browseLog.shift();
+                      this.browseLog.push(this.cacheArea);
+                    }
+                  },
+                },
+                created() {
+                  this.getData();
+                },
+              };
+            
+              Vue.createApp(App).mount('#app');
             </script>
+            
+            <style>
+                #app {
+                    height: 600px;
+                }
+            
+                .option {
+                    overflow-y: auto;
+                }
+            </style>
           </main>                  
         </div>
       </div>
