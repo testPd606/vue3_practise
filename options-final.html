@@ -38,7 +38,7 @@
                   <div class="list-group option">
                     <label class="list-group-item" v-for="(item, id) in filterData" :key="id + 'place'">
                       <input class="form-check-input me-1" type="radio" name="area" @click="cacheArea = item"
-                      :value="item" id="id + 'place'">
+                      :value="item" id="id + 'place'" >
                       {{ item.Name }}
                     </label>
                   </div>
@@ -49,7 +49,7 @@
                   <div class="form-floating">
                     <select id="cacheArea" class="form-select w-50 mb-2" aria-label="select example" v-model="cacheArea">
                       <option selected disabled>瀏覽紀錄</option>
-                      <option v-for="(item, id) in browseLog" :key="id + 'browse'" :value="item">{{id+1}}.{{item.Name}}</option>
+                      <option v-for="(item, id) in browseLog" :value="item">{{id+1}}.{{item.Name}}</option>
                     </select>
                     <label for="cacheArea">瀏覽紀錄</label>
                   </div>
@@ -110,11 +110,11 @@
               },
               watch:{
                 cacheArea(){
-                  if(this.datastore.length < 10){
-                    this.browseLog.push(this.datastore);
+                  if(this.browseLog.length < 10){
+                    this.browseLog.push(this.cacheArea);
                   } else {
                     this.browseLog.shift();
-                    this.browseLog.push(this.datastore);
+                    this.browseLog.push(this.cacheArea);
                   }
                 }
               }
