@@ -21,13 +21,13 @@
                 <div class="col-md-3 h-100 d-flex flex-column">
                   <!-- 搜尋欄 -->
                   <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="search" placeholder="search">
+                    <input type="text" class="form-control" id="search" placeholder="search" v-model="cacheSearch">
                     <label for="search">search</label>
                   </div>
                   <!-- 搜尋欄 -->
                   <!-- 左側選單 -->
                   <div class="list-group option">
-                    <label class="list-group-item" v-for="(item, id) in datastore" :key="id+'filter'">
+                    <label class="list-group-item" v-for="(item, id) in filterSearch" :key="id+'filter'">
                       <input class="form-check-input me-1" type="radio" name="area">
                       {{ item.Name }}
                     </label>
@@ -69,14 +69,16 @@
                     const apiUrl = 'https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json';
                     axios.get(apiUrl).then((res) => {
                       this.datastore = res.data.result.records;
-                    })
-                  }
+                    });
+                  },
                 },
                 created(){
                   this.getData();
                 },
                 computed:{
-                  
+                  filterSearch(){
+                    return this.datastore.filter((item)=>item.Name.match(this.cacheSearch));
+                  },
                 }
               };
               
