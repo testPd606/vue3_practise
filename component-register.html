@@ -20,6 +20,8 @@
                 </ol>
             </div>
             <alert></alert>
+            <!-- 加入其他的元件 -->
+            <alert2></alert2>
         </div>
     </div>
 
@@ -38,6 +40,16 @@
             },
             template:`<div class="bg-warning" role="alert">{{text}}</div>`
         });       
+
+        // 在尚未渲染到畫面時，可以在這個app加入其他的元件
+        app.component("alert2", {
+            data(){
+                return {
+                    text:"加入其他元件",
+                };
+            },
+            template:`<div class="bg-warning" role="alert">{{text}}</div>`
+        });
 
         app.mount("#app");
     </script>
