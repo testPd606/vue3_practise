@@ -9,6 +9,37 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    
+    <div id="app" class="container">
+        <div class="row">
+            <div class="col">
+                <ol>
+                    <li>元件需要在createdAPP之後，MOUNT之前</li>
+                    <li>元件需要指定一個名稱</li>
+                    <li>元件結構與外部的根元件結構無異</li>
+                    <li>元件另外有資料傳遞和事件傳遞</li>
+                </ol>
+            </div>
+            <alert></alert>
+        </div>
+    </div>
+
+    <script type="module">
+        const app = Vue.createApp({
+            data(){
+                return {
+                    text:"外部元件文字",
+                };
+            },
+        }).component("alert",{
+            data(){
+                return {
+                    text:"內部文字"
+                };
+            },
+            template:`<div class="bg-warning" role="alert">{{text}}</div>`
+        });       
+
+        app.mount("#app");
+    </script>
 </body>
 </html>
