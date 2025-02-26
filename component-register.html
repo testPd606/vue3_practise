@@ -10,48 +10,7 @@
 </head>
 <body>
     <div id="app" class="container">
-        <div class="row">
-            <div class="col">
-                <ol>
-                    <li>元件需要在createdAPP之後，MOUNT之前</li>
-                    <li>元件需要指定一個名稱</li>
-                    <li>元件結構與外部的根元件結構無異</li>
-                    <li>元件另外有資料傳遞和事件傳遞</li>
-                </ol>
-            </div>
-            <alert></alert>
-            <!-- 加入其他的元件 -->
-            <alert2></alert2>
-        </div>
+
     </div>
-
-    <script type="module">
-        const app = Vue.createApp({
-            data(){
-                return {
-                    text:"外部元件文字",
-                };
-            },
-        }).component("alert",{
-            data(){
-                return {
-                    text:"內部文字"
-                };
-            },
-            template:`<div class="bg-warning" role="alert">{{text}}</div>`
-        });       
-
-        // 在尚未渲染到畫面時，可以在這個app加入其他的元件
-        app.component("alert2", {
-            data(){
-                return {
-                    text:"加入其他元件",
-                };
-            },
-            template:`<div class="bg-warning" role="alert">{{text}}</div>`
-        });
-
-        app.mount("#app");
-    </script>
 </body>
 </html>
