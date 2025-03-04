@@ -13,9 +13,9 @@
         <h1>元件基本範例及結構</h1>
         <h3 class="text-secondary">元件使用的基本要點</h3>
         <ol class="ps-0" style="list-style-position: inside;">
-            <li>元件需要再createApp後，mount前進行定義。</li>
+            <li>元件需要在createApp後，mount前進行定義。</li>
             <li>元件需要指定一個名稱。</li>
-            <li>元件結構與最外層的根元件結構無異（除了增加Template的片段的片段）。</li>
+            <li>元件結構與最外層的根元件結構無異（除了增加Template的片段）。</li>
             <li>元件另有prop、emits等資料傳遞與事件傳遞。</li>
         </ol>
         <element></element>
@@ -89,7 +89,7 @@
         app.component("element2",{
             data(){
                 return {
-                    text:"其他全域註冊的元件",
+                    text:"不同元件的註冊方式",
                 }
             },
             // 將區域元件註冊再其他元件下
