@@ -17,10 +17,16 @@
             <name-2></name-2>
             <br>
             <app2></app2>
+            <br>
+            <app4></app4>
         </div>
     </div>
 
-    <script>
+    <!-- 模組化元件區域註冊方式，先將<script>加上type="module" -->
+    <script type="module">
+        // 外部置入模組化的區域註冊元件
+        import app4 from "./script/us_practise.js";
+
         // 第二種不同元件的區域註冊方式-2
         const app3 = {
             data(){
@@ -49,7 +55,8 @@
             },
             // 決定將區域註冊後的元件掛在哪個根元件或子元件下面
             components:{
-                app2
+                app2,
+                app4
             },
         }).component("name-1",{
             data(){
