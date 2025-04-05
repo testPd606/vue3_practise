@@ -13,6 +13,8 @@
         <div class="p-2 m-2">
             <h3>元件使用的基本要點</h3>
             <name-1></name-1>
+            <br>
+            <name-2></name-2>
         </div>
     </div>
 
@@ -29,7 +31,17 @@
                     contact2:"全域元件",
                 }
             },
-            template:`<div class="fs-5 p-2 text-bg-primary">{{contact2}}</div>`,
+            template:`<div class="fs-5 p-2 text-white bg-primary">{{contact2}}</div>`,
+        });
+
+        // 第二種元件註冊方式
+        app.component("name-2",{
+            data(){
+                return{
+                    contact3:"第二種元件註冊方式",
+                }
+            },
+            template:`<div class="fs-5 p-2 text-white bg-danger">{{contact3}}</div>`,
         });
 
         app.mount("#test");
