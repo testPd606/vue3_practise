@@ -15,15 +15,41 @@
             <name-1></name-1>
             <br>
             <name-2></name-2>
+            <br>
+            <app2></app2>
         </div>
     </div>
 
     <script>
+        // 第二種不同元件的區域註冊方式-2
+        const app3 = {
+            data(){
+                return{
+                    contact4:"掛載到其他不同元件之下",
+                }
+            },
+            template:`<div class="fs-5 p-2 text-white bg-black">{{contact4}}</div>`
+        };
+
+        // 第二種不同元件的區域註冊方式
+        const app2 = {
+            data(){
+                return{
+                    contact3:"區域註冊方式",
+                }
+            },
+            template:`<div class="fs-5 p-2 text-white bg-success">{{contact3}}</div>`
+        };
+
         const app = Vue.createApp({
             data(){
                 return{
                     contact:"最外層的原件",
                 }
+            },
+            // 決定將區域註冊後的元件掛在哪個根元件或子元件下面
+            components:{
+                app2
             },
         }).component("name-1",{
             data(){
@@ -38,10 +64,17 @@
         app.component("name-2",{
             data(){
                 return{
-                    contact3:"第二種元件註冊方式",
+                    contact3:"第二種不同元件的全域註冊方式",
                 }
             },
-            template:`<div class="fs-5 p-2 text-white bg-danger">{{contact3}}</div>`,
+            // 將區域註冊掛載到不同元件的全域註冊之下
+            components:{
+                app3
+            },
+            template:`<div class="fs-5 p-2 text-white bg-danger">
+                {{contact3}}
+                <app3></app3>
+            </div>`,
         });
 
         app.mount("#test");
