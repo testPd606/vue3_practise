@@ -9,6 +9,55 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    
+    <!-- 這裡需要先宣告一個樣式為x-template的script，並加上id -->
+    <script type="text/x-template" id="x_template_id">
+        <div class="text-bg-secondary p-3">x-template所建立的元件</div>
+    </script>
+
+    <div id="main" class="container p-3">
+        <h1>樣板建立方式</h1>
+        <h3>template</h3>
+        <t_element></t_element>
+        <br>
+        <h3>x-template</h3>
+        <!-- 這邊才是真正要渲染x-template -->
+        <x_t_element></x_t_element>
+        <br><hr><br>
+        <h1>元件運用</h1>
+        <h3>直接使用標籤名稱</h3>
+        <t_element></t_element>
+        <br>
+        <h3>搭配v-for也是沒問題</h3>
+        <t_element v-for="item in array" :key="item"></t_element>
+        <br>
+        <h3>使用v-is綁定</h3>
+        <!-- v-is最大的特色就是直接使用div當標籤 -->
+        <div is="vue:t_element"></div>
+    </div>
+
+    <script>
+        const test = Vue.createApp({
+            data(){
+                return{
+                    array:[1,2,3],
+                    name:"這是一個元件名稱",
+                }
+            },
+        });
+
+        //template
+        test.component("t_element",{
+            template:`<div class="text-bg-primary p-3">範例一</div>`,
+        });
+
+        //x-template
+        test.component("x_t_element",{
+            // 這邊的template不能用樣板字面值，要使用雙引號
+            // 將html的id代入
+            template:"#x_template_id",
+        });
+
+        test.mount("#main");
+    </script>
 </body>
 </html>
