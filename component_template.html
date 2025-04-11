@@ -33,14 +33,33 @@
         <h3>使用v-is綁定</h3>
         <!-- v-is最大的特色就是直接使用div當標籤 -->
         <div is="vue:t_element"></div>
+        <br>
+        <h3>動態屬性</h3>
+        <input type="text" v-model="name">
+        <!-- 任何標籤都能搭配v-is進行動態切換 -->
+        <div is="vue:name"></div>
+        <br><br>
+        <h3>動態標籤實戰技巧</h3>
+        <table class="table table-bordered w-50">
+            <thead>
+              <tr>
+                <th scope="col">標題</th>
+                <th scope="col">內文</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr is="vue:table-row"></tr>
+                 <!-- <table-row></table-row> -->
+            </tbody>
+          </table>
     </div>
 
-    <script>
+    <script type="module">
         const test = Vue.createApp({
             data(){
                 return{
                     array:[1,2,3],
-                    name:"這是一個元件名稱",
+                    name:"t_element",
                 }
             },
         });
@@ -55,6 +74,10 @@
             // 這邊的template不能用樣板字面值，要使用雙引號
             // 將html的id代入
             template:"#x_template_id",
+        });
+
+        test.component("table-row",{
+            template:`<tr><td>@</td><td>這是一個tr項目</td></tr>`,
         });
 
         test.mount("#main");
