@@ -32,13 +32,19 @@
         <br>
         <h3>使用v-is綁定</h3>
         <!-- v-is最大的特色就是直接使用div當標籤 -->
+        <!-- v3.4版本以後寫法 -->
+        <h4>在原生 html 標籤上使用 is="vue:元件名稱"</h4>
         <div is="vue:t_element"></div>
         <br>
         <h3>動態屬性</h3>
-        <input type="text" v-model="name">
         <!-- 任何標籤都能搭配v-is進行動態切換 -->
-        <div is="vue:name"></div>
-        <br><br>
+        <input type="text" class="form-control w-25 mb-4" v-model="name">
+        <h4><component>1. 元素上使用 v-bind:is="VueData"</h4>
+        <component :is="name"></component>
+        <br>
+        <h4>2. 也可以對:is傳入表達式</h4>
+        <component :is="'t_element_2'"></component>
+        <br>
         <h3>動態標籤實戰技巧</h3>
         <table class="table table-bordered w-50">
             <thead>
@@ -54,12 +60,13 @@
           </table>
     </div>
 
-    <script type="module">
+    <script>
         const test = Vue.createApp({
             data(){
                 return{
                     array:[1,2,3],
                     name:"t_element",
+                    // name2:"t_element_2"
                 }
             },
         });
@@ -67,6 +74,10 @@
         //template
         test.component("t_element",{
             template:`<div class="text-bg-primary p-3">範例一</div>`,
+        });
+
+        test.component("t_element_2",{
+            template:`<div class="text-bg-warning p-3">範例二</div>`,
         });
 
         //x-template
