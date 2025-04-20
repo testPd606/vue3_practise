@@ -12,32 +12,55 @@
     <div id="test" class="container p-3">
         <h1>Props 靜態資料</h1>
         <p>由外部傳入資料至內部</p>
-        <span>外部資料：https://images.pexels.com/photos/27871032/pexels-photo-27871032.jpeg</span>
-        <photo link="https://images.pexels.com/photos/27871032/pexels-photo-27871032.jpeg"></photo>
-        <hr>
+        <photo link="https://cdn.lifeofpix.com/369816/_w1800/370365/lifeofpix-369816370365.webp"></photo> 
+        <hr>  
         <h1>動態資源</h1>
         <p>技巧：前內、後外</p>
-
+        <photo-dynamic :https="imgUrl"></photo-dynamic>
         <hr>
         <h1>單向數據流</h1> 
-
+        <one-way :url="imgUrl2"></one-way>
         <hr>       
         <h1>命名限制</h1>
+        <naming-restrictions :connect-Url="imgUrl3"></naming-restrictions>
     </div>
 
     <script>
-        const app = Vue.createdApp({
+        const app = Vue.createApp({
             data() {
                 return {
-                    imgUrl: "https://images.pexels.com/photos/27871032/pexels-photo-27871032.jpeg",
-                }
+                    imgUrl: "https://cdn.lifeofpix.com/368590/_w1800/370584/lifeofpix-368590370584.webp",
+                    imgUrl2:"https://cdn.lifeofpix.com/369817/_w1800/370405/lifeofpix-369817370405.webp",
+                    imgUrl3:"https://cdn.lifeofpix.com/368789/_w1800/368792/lifeofpix-368789368792.webp"
+                };
             },
         });
 
         // Props靜態資料
         app.component("photo",{
             props:["link"],
-            template:`<img :src="link" class="img-fluid" alt="img">`,
+            template:`<img :src="link" class="img-thumbnail" alt="img">`,
+        });
+
+        // Props動態資料
+        app.component("photo-dynamic",{
+            props:["https"],
+            template:`<img :src="https" class="img-thumbnail" alt="img2">`,
+        });
+
+        // 單向數據流
+        app.component("one-way",{
+            props:["url"],
+            template:`
+            <img :src="url" class="img-thumbnail" alt="img3" class="mb-2">
+            <input type="text" class="form-control" placeholder="修改外部資料" v-model="url">
+            `,
+        });
+
+        // 命名限制
+        app.component("naming-restrictions",{
+            props:["connectUrl"],
+            template:`<img :src="connectUrl" class="img-thumbnail" alt="img4">`,
         });
 
         app.mount("#test");
